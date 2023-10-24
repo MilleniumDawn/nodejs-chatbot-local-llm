@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chatbot</title>
-    <link rel="stylesheet" href="styles.css">
-    <script type="module" src="client.js" defer></script>
-</head>
-<body>
-    <div id="chat">
-        <div id="messages"></div>
-        <div id="input-area">
-            <input id="input" autocomplete="off" placeholder="Type your message here...">
-            <button onclick="sendMessage()">Send</button>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Chatbot</title>
+        <link rel="stylesheet" href="styles.css" />
+        <script type="module" src="client.js" defer></script>
+    </head>
+    <body>
+        <div id="chat">
+            <div id="messages"></div>
+            <div id="input-area">
+                <input id="input" autocomplete="off" placeholder="Type your message here..." />
+                <button onclick="import('./client.js').then(module => module.handleSendButtonClick())">Send</button>
+            </div>
         </div>
-    </div>
-</body>
+    </body>
 </html>
