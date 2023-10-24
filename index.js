@@ -1,8 +1,8 @@
-// inspired by https://github.com/bradtraversy/chatgpt-chatbot
 // Import the necessary modules
 import axios from "axios";
 import readlineSync from "readline-sync";
 import colors from "colors";
+import http from "http";
 
 async function main() {
     console.log(colors.bold.green("Welcome to the Chatbot Program!"));
@@ -23,36 +23,59 @@ async function main() {
             // Add latest user input
             messages.push({ role: "user", content: userInput });
 
+            // Create an axios instance for streaming
+            const axiosInstance = axios.create({
+                baseURL: "http://localhost:1234/v1",
+                headers: { "Content-Type": "application/json" },
+                responseType: 'stream'
+            });
+
             // Call the API with user input & history
-            const response = await axios.post(
-                "http://localhost:1234/v1/chat/completions",
+            const response = await axiosInstance.post(
+                "/chat/completions",
                 {
                     messages: messages,
                     stop: ["### Instruction:"],
                     temperature: 0.7,
                     max_tokens: -1,
-                    stream: false,
-                },
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
+                    stream: true,
                 }
             );
 
-            // Get completion text/content
-            const completionText = response.data.choices[0].message.content;
+            // The response data should now be a readable stream
+            const stream = response.data;
+            
+            stream.on('data', (chunk) => {
+                const payloads = chunk.toString().split("\n\n");
+                for (const payload of payloads) {
+                    if (payload.includes('[DONE]')) return;
+                    if (payload.startsWith("data:")) {
+                        const data = JSON.parse(payload.replace("data: ", ""));
+                        try {
+                            const chunk = data.choices[0].delta?.content;
+                            if (chunk) {
+                                console.log(colors.green("Bot: ") + chunk);
+                                
+                                // Update history with assistant response
+                                chatHistory.push(["assistant", chunk]);
+                            }
+                        } catch (error) {
+                            console.log(`Error with JSON.parse and ${payload}.\n${error}`);
+                        }
+                    }
+                }
+            });
 
-            if (userInput.toLowerCase() === "exit") {
-                // console.log(colors.green("Bot: ") + completionText);
-                return;
-            }
+            stream.on('end', () => {
+                setTimeout(() => {
+                    console.log('\nStream done');
+                }, 10);
+            });
 
-            console.log(colors.green("Bot: ") + completionText);
+            stream.on('error', (err) => {
+                console.error(colors.red(err));
+            });
 
-            // Update history with user input and assistant response
-            chatHistory.push(["user", userInput]);
-            chatHistory.push(["assistant", completionText]);
         } catch (error) {
             console.error(colors.red(error));
         }
