@@ -1,3 +1,4 @@
+// inspired by https://github.com/bradtraversy/chatgpt-chatbot
 // Import the necessary modules
 import axios from "axios";
 import readlineSync from "readline-sync";
