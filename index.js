@@ -44,7 +44,7 @@ async function main() {
             const completionText = response.data.choices[0].message.content;
 
             if (userInput.toLowerCase() === "exit") {
-                console.log(colors.green("Bot: ") + completionText);
+                // console.log(colors.green("Bot: ") + completionText);
                 return;
             }
 
