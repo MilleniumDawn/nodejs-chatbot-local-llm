@@ -1,3 +1,4 @@
+// inspired by https://github.com/openai/openai-node/issues/18
 // Import the necessary modules
 import axios from "axios";
 import readlineSync from "readline-sync";
