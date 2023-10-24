@@ -7,7 +7,7 @@ async function main() {
     console.log(colors.bold.green("You can start chatting with the bot."));
 
     const chatHistory = []; // Store conversation history
-    console.log(openai);
+    // console.log(openai);
 
     while (true) {
         const userInput = readlineSync.question(colors.yellow("You: "));
