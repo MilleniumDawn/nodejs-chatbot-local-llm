@@ -1,7 +1,6 @@
 # Ignore the .env file
 .env
 .DS_Store
-package-lock.json
 
 # Ignore the node_modules directory
 node_modules/
