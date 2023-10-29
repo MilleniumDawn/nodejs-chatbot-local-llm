@@ -21,6 +21,10 @@ app.get('/', (req, res) => {
     const __dirname = dirname(__filename);
     res.sendFile(__dirname + '/index.html');
 });
+app.get('/config', (req, res) => {
+    res.json({ modelName: config.modelName });
+});
+
 
 io.on('connection', (socket) => {
     console.log(`User connected with socket ID: ${socket.id}`);
