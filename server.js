@@ -1,4 +1,5 @@
 //server.js
+// reference https://platform.openai.com/docs/api-reference/chat
 import express from 'express';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
