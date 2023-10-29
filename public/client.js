@@ -23,8 +23,15 @@ document.getElementById("input").addEventListener("keydown", (e) => {
     }
 });
 
+function formatMessage(msg) {
+    msg = msg.replace(/\n/g, "<br>"); // Replace newline characters with <br> tags
+    msg = msg.replace(/\t/g, "    "); // Replace tab characters with four space characters
+    return msg;
+}
+
 socket.on("bot message", (msg) => {
-    botMessageDiv.innerHTML += msg; // Append the chunk of text to the current bot message div
+    msg = formatMessage(msg); // Format the message
+    botMessageDiv.innerHTML += msg; // Append the formatted message to the current bot message div
     const messagesDiv = document.getElementById("messages");
     messagesDiv.scrollTop = messagesDiv.scrollHeight; // Auto-scroll to bottom
 });

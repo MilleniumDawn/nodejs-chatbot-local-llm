@@ -1,3 +1,4 @@
+//server.js
 import express from 'express';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
@@ -5,7 +6,6 @@ import axios from 'axios';
 import colors from 'colors';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-
 
 const app = express();
 const server = createServer(app);
@@ -19,25 +19,56 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html');
 });
 
+// Store message history per user
+const userMessageHistories = new Map();
+
+// Function to ensure the total token count is within the limit
+const ensureTokenLimit = (messageHistory) => {
+    const tokenLimit = 3072;
+    let tokenCount = messageHistory.reduce((count, message) => count + message.content.split(' ').length, 0);
+    
+    while (tokenCount > tokenLimit && messageHistory.length > 1) {
+        const removedMessage = messageHistory.shift();  // Remove the earliest message
+        tokenCount -= removedMessage.content.split(' ').length;  // Update the token count
+    }
+};
 
 io.on('connection', (socket) => {
-    console.log('a user connected');
+    console.log(`User connected with socket ID: ${socket.id}`);
+
+    // Initialize New User Message History
+    userMessageHistories.set(socket.id, [
+        {
+            role: "system",
+            content: "A chat between a curious user and an artificial intelligence assistant. The assistant gives helpful, detailed, and polite answers to the user's questions."
+        }
+    ]);
+
     socket.on('user message', async (msg) => {
         console.log('message: ' + msg);
         let isFirstChunk = true;
-        
-        try {
-            const messages = [{ role: "user", content: msg }];
+        let accumulatedResponse = '';
 
+        // Update message history with the new user message
+        const messageHistory = userMessageHistories.get(socket.id);
+        messageHistory.push({
+            role: "user",
+            content: `USER: ${msg} ASSISTANT:`
+        });
+
+        // Ensure the message history is within the token limit
+        ensureTokenLimit(messageHistory);
+
+        try {
             const axiosInstance = axios.create({
-                baseURL: "http://localhost:1234/v1",
+                baseURL: "http://127.0.0.1:5001/v1",
                 headers: { "Content-Type": "application/json" },
                 responseType: "stream",
             });
 
             const response = await axiosInstance.post("/chat/completions", {
-                messages: messages,
-                stop: ["### Instruction:"],
+                messages: messageHistory,
+                stop: ["</s>"],
                 temperature: 0.7,
                 max_tokens: -1,
                 stream: true,
@@ -57,6 +88,8 @@ io.on('connection', (socket) => {
                         const parsed = JSON.parse(message);
                         const chunk = parsed.choices[0].delta?.content;
                         if (chunk) {
+                            accumulatedResponse += chunk;  // Accumulate chunks for message history
+
                             if (isFirstChunk) {
                                 socket.emit('bot message', 'Bot: ' + chunk);
                                 isFirstChunk = false;
@@ -72,6 +105,11 @@ io.on('connection', (socket) => {
 
             stream.on("end", () => {
                 console.log('Stream done');
+                // Update message history with the accumulated bot message
+                messageHistory.push({
+                    role: "assistant",
+                    content: accumulatedResponse
+                });
             });
 
             stream.on("error", (err) => {
@@ -81,8 +119,14 @@ io.on('connection', (socket) => {
             console.error(colors.red(error));
         }
     });
+
+    socket.on('disconnect', () => {
+        // Optionally, clean up user message history on disconnect
+        console.log(`User disconnected with socket ID: ${socket.id}`);
+        userMessageHistories.delete(socket.id);
+    });
 });
 
-server.listen(3000, () => {
-    console.log('listening on *:3000');
+server.listen(3002, () => {
+    console.log('listening on *:3002');
 });

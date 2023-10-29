@@ -1,8 +1,21 @@
+/* || Reset */
+*,
+html,
 body {
-    font-family: Arial, sans-serif;
-    background-color: #e6e6e6;
-    margin: 0;
-    padding: 0;
+    margin: 0rem;
+    padding: 0rem;
+    box-sizing: border-box;
+    font-family: "Special Elite", monospace;
+}
+
+/* || General */
+body {
+    background-color: #b22222;
+    color: #000;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -10,12 +23,23 @@ body {
     min-height: 100vh;
 }
 
+::selection {
+    background: #000;
+    color: #b22222;
+}
+
+/* || Chat Styles */
 #chat {
-    background-color: #d4d4d4;
+    color: #000;
+    background-color: transparent;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
     width: 80%;
-    max-width: 500px;
+    max-width: 800px;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    margin: 2rem;  /* Add margin here */
+    box-shadow: 0.1rem 0.1rem 0 rgba(0, 0, 0, 0.32), 0.3rem 0.3rem 0 #b22222, 0.4rem 0.4rem 0 rgba(0, 0, 0, 0.32), 0.6rem 0.6rem 0 #b22222, 0.7rem 0.7rem 0 rgba(0, 0, 0, 0.32), 0.9rem 0.9rem 0 #b22222, 1rem 1rem 0 rgba(0, 0, 0, 0.32), 1.2rem 1.2rem 0 #b22222, 1.3rem 1.2rem 0 rgba(0, 0, 0, 0.32),
+        0 0 0.2rem rgba(0, 0, 0, 0.6), inset 0 0 5rem rgba(0, 0, 0, 0.5);
 }
 
 #messages {
@@ -23,9 +47,8 @@ body {
     max-height: 80vh;
     margin-bottom: 1rem;
     padding: 1rem;
-    border: 2px solid #ccc;
     border-radius: 4px;
-    background-color: #f9f9f9;
+    background-color: transparent;
 }
 
 #messages div {
@@ -35,33 +58,117 @@ body {
 }
 
 #messages .user {
-    background-color: #d1f7d1;
+    background-color: #b22222;
     text-align: left;
+    color: #000;
 }
 
 #messages .bot {
-    background-color: #d1d1f7;
+    background-color: #000;
     text-align: left;
+    color: #b22222;
     border-radius: 4px;
 }
+
+#messages .bot::selection {
+    background: #b22222;
+    color: #000;
+}
+
 
 input {
     width: 75%;
     padding: 0.5rem;
     margin-right: 0.5rem;
-    border: 2px solid #ccc;
+    border: 2px solid #000;
     border-radius: 4px;
+    background-color: #b22222; /* Adjusted background color to match theme */
+    color: #000; /* Adjusted text color to black */
+    font-family: "Special Elite", monospace; /* Adjusted font to match theme */
+}
+
+input:focus {
+    outline: none; /* Removes the default outline */
+    box-shadow: 0 0 0 2px #000; /* Adds a black border around the input when it's focused */
+}
+
+input::placeholder {
+    color: #282828;  /* Adjust the color as per your theme */
+    opacity: 1;  /* Optional: ensures full color opacity */
+    font-family: "Special Elite", monospace;  /* Optional: adjust the font-family if necessary */
 }
 
 button {
     padding: 0.5rem 1rem;
-    border: none;
+    border: 2px solid #b22222;
     border-radius: 4px;
-    background-color: #008CBA;
-    color: white;
+    background-color: #000;
+    color: #b22222;
     cursor: pointer;
 }
 
 button:hover {
-    background-color: #005f5f;
+    background-color: #b22222;
+    color: #000;
+}
+
+#input-area {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    border-top: 2px solid #000;
+}
+
+.explanation {
+    background-color: #000;
+    color: #b22222;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-top: 1rem;
+    text-align: center;
+    width: 80%;
+    max-width: 500px;
+    box-shadow: 0.1rem 0.1rem 0 rgba(0, 0, 0, 0.32), 0.3rem 0.3rem 0 #b22222;
+    font-size: 0.9rem;
+}
+
+#safetyButton {
+    padding: 1rem 2rem;
+    border: 2px solid #b22222;
+    border-radius: 4px;
+    background-color: #b22222;
+    color: #000;
+    font-family: "Special Elite", monospace;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 1rem;
+    display: block;  /* Makes the button block level so it centers with margin auto */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#safetyButton:hover {
+    background-color: #000;
+    color: #b22222;
+    border: 2px solid #b22222;
+}
+
+/* Styles for Webkit browsers like Chrome/Safari */
+#messages::-webkit-scrollbar {
+    width: 12px;  /* Width of the scrollbar */
+}
+
+#messages::-webkit-scrollbar-thumb {
+    background-color: #b22222;  /* Color of the draggable scroll thumb */
+    border-radius: 6px;  /* Radius of the corners on the scroll thumb */
+}
+
+#messages::-webkit-scrollbar-track {
+    background-color: #000;  /* Color of the track below the scroll thumb */
+}
+
+/* Styles for Firefox */
+#messages {
+    scrollbar-width: thin;  /* Width of the scrollbar */
+    scrollbar-color: #b22222 #000;  /* Color of the draggable scroll thumb and track below the scroll thumb */
 }
