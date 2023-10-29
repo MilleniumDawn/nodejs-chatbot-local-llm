@@ -69,10 +69,11 @@ io.on('connection', (socket) => {
 
             const response = await axiosInstance.post("/chat/completions", {
                 messages: messageHistory,
-                stop: ["</s>"],
+                stop: ["."],
                 temperature: 0.7,
-                max_tokens: -1,
+                max_tokens: 4096,
                 stream: true,
+                repetition_penalty: 1.1,
             });
 
             const stream = response.data;
