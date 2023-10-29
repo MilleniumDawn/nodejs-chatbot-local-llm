@@ -24,11 +24,6 @@ body {
     min-height: 100vh;
 }
 
-::selection {
-    background: #000;
-    color: #b22222;
-}
-
 /* || Chat Styles */
 #chat {
     color: #000;
@@ -38,7 +33,7 @@ body {
     max-width: 800px;
     padding-top: 1rem;
     padding-bottom: 1rem;
-    margin: 2rem;  /* Add margin here */
+    margin: 2rem; /* Add margin here */
     box-shadow: 0.1rem 0.1rem 0 rgba(0, 0, 0, 0.32), 0.3rem 0.3rem 0 #b22222, 0.4rem 0.4rem 0 rgba(0, 0, 0, 0.32), 0.6rem 0.6rem 0 #b22222, 0.7rem 0.7rem 0 rgba(0, 0, 0, 0.32), 0.9rem 0.9rem 0 #b22222, 1rem 1rem 0 rgba(0, 0, 0, 0.32), 1.2rem 1.2rem 0 #b22222, 1.3rem 1.2rem 0 rgba(0, 0, 0, 0.32),
         0 0 0.2rem rgba(0, 0, 0, 0.6), inset 0 0 5rem rgba(0, 0, 0, 0.5);
 }
@@ -64,6 +59,11 @@ body {
     color: #000;
 }
 
+#messages .user::selection {
+    background: #000;
+    color: #b22222;
+}
+
 #messages .bot {
     background-color: #000;
     text-align: left;
@@ -75,7 +75,6 @@ body {
     background: #b22222;
     color: #000;
 }
-
 
 input {
     width: 75%;
@@ -94,9 +93,9 @@ input:focus {
 }
 
 input::placeholder {
-    color: #282828;  /* Adjust the color as per your theme */
-    opacity: 1;  /* Optional: ensures full color opacity */
-    font-family: "Special Elite", monospace;  /* Optional: adjust the font-family if necessary */
+    color: #282828; /* Adjust the color as per your theme */
+    opacity: 1; /* Optional: ensures full color opacity */
+    font-family: "Special Elite", monospace; /* Optional: adjust the font-family if necessary */
 }
 
 button {
@@ -133,6 +132,12 @@ button:hover {
     font-size: 0.9rem;
 }
 
+.explanation *::selection {
+    background: #b22222; /* Your theme color */
+    color: #000; /* Black text */
+}
+
+
 #safetyButton {
     padding: 1rem 2rem;
     border: 2px solid #b22222;
@@ -143,7 +148,7 @@ button:hover {
     font-size: 1rem;
     cursor: pointer;
     margin-top: 1rem;
-    display: block;  /* Makes the button block level so it centers with margin auto */
+    display: block; /* Makes the button block level so it centers with margin auto */
     margin-left: auto;
     margin-right: auto;
 }
@@ -156,20 +161,20 @@ button:hover {
 
 /* Styles for Webkit browsers like Chrome/Safari */
 #messages::-webkit-scrollbar {
-    width: 12px;  /* Width of the scrollbar */
+    width: 12px; /* Width of the scrollbar */
 }
 
 #messages::-webkit-scrollbar-thumb {
-    background-color: #b22222;  /* Color of the draggable scroll thumb */
-    border-radius: 6px;  /* Radius of the corners on the scroll thumb */
+    background-color: #b22222; /* Color of the draggable scroll thumb */
+    border-radius: 6px; /* Radius of the corners on the scroll thumb */
 }
 
 #messages::-webkit-scrollbar-track {
-    background-color: #000;  /* Color of the track below the scroll thumb */
+    background-color: #000; /* Color of the track below the scroll thumb */
 }
 
 /* Styles for Firefox */
 #messages {
-    scrollbar-width: thin;  /* Width of the scrollbar */
-    scrollbar-color: #b22222 #000;  /* Color of the draggable scroll thumb and track below the scroll thumb */
+    scrollbar-width: thin; /* Width of the scrollbar */
+    scrollbar-color: #b22222 #000; /* Color of the draggable scroll thumb and track below the scroll thumb */
 }

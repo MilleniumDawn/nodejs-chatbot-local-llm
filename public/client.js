@@ -6,13 +6,12 @@ const socket = io();
 let botMessageDiv; // Declare a variable to hold the current bot message div
 
 async function fetchConfig() {
-    const response = await fetch('/config');
+    const response = await fetch("/config");
     const config = await response.json();
-    document.querySelector('.modelName').textContent = `This AI is running locally using the model "${config.modelName}" on LM Studio.`;
+    document.querySelector(".modelName").textContent = `This AI is running locally using the model "${config.modelName}" on LM Studio.`;
 }
 
 fetchConfig();
-
 
 function sendMessage() {
     const message = document.getElementById("input").value;
