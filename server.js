@@ -56,5 +56,5 @@ io.on('connection', (socket) => {
 });
 
 server.listen(config.port, () => {
-    console.log(`listening on *:${config.port}`);
+    console.log(`listening on localhost:${config.port}`);
 });
