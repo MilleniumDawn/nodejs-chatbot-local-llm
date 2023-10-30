@@ -31,9 +31,17 @@ document.getElementById("input").addEventListener("keydown", (e) => {
     }
 });
 
+function escapeHtml(unsafe) {
+    return unsafe.replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
 function formatMessage(msg) {
-    msg = msg.replace(/\n/g, "<br>"); // Replace newline characters with <br> tags
-    msg = msg.replace(/\t/g, "    "); // Replace tab characters with four space characters
+    msg = escapeHtml(msg);  // Escape HTML first
+    msg = msg.replace(/\n/g, "<br>"); // Then convert newline characters to <br> tags
     return msg;
 }
 
@@ -43,6 +51,7 @@ socket.on("bot message", (msg) => {
     const messagesDiv = document.getElementById("messages");
     messagesDiv.scrollTop = messagesDiv.scrollHeight; // Auto-scroll to bottom
 });
+
 
 export function handleSendButtonClick() {
     sendMessage();
