@@ -13,7 +13,7 @@ export async function handleUserMessage(socket, messageHistory, msg) {
 
     try {
         const axiosInstance = axios.create({
-            baseURL: "http://localhost:1234/v1",
+            baseURL: config.apiBaseUrl,
             headers: { "Content-Type": "application/json" },
             responseType: "stream",
         });
