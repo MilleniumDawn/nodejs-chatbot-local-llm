@@ -2,8 +2,8 @@
 /* inspired by https://huettenhain.net/ */
 
 :root {
-    --primary-color: #b22222;
-    --secondary-color: #000;
+    --primary-color: #181818;
+    --secondary-color: #1AC01A;
 }
 
 *,
@@ -99,7 +99,7 @@ input:focus {
 }
 
 input::placeholder {
-    color: #282828; /* Adjust the color as per your theme */
+    color: #008000; /* Adjust the color as per your theme */
     opacity: 1; /* Optional: ensures full color opacity */
     font-family: "Special Elite", monospace; /* Optional: adjust the font-family if necessary */
 }
@@ -126,8 +126,8 @@ button:hover {
 }
 
 .explanation {
-    background-color: var(--secondary-color);
-    color: var(--primary-color);
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
     padding: 1rem;
     border-radius: 4px;
     margin-top: 1rem;
@@ -139,8 +139,8 @@ button:hover {
 }
 
 .explanation *::selection {
-    background: var(--primary-color); /* Your theme color */
-    color: var(--secondary-color); /* Black text */
+    background: var(--secondary-color); /* Your theme color */
+    color: var(--primary-color); /* Black text */
 }
 
 
