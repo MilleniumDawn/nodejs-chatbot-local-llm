@@ -4,6 +4,7 @@
 :root {
     --primary-color: #181818;
     --secondary-color: #1AC01A;
+    --terciary-color: #008000;
 }
 
 *,
@@ -32,26 +33,33 @@ body {
 
 /* || Chat Styles */
 #chat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     color: var(--secondary-color);
     background-color: transparent;
     border-radius: 8px;
     width: 80%;
     max-width: 800px;
+    position: relative; 
+    height: 80vh; 
+    justify-content: space-between; 
     padding-top: 1rem;
     padding-bottom: 1rem;
-    margin: 2rem; /* Add margin here */
+    margin: 2rem; 
     box-shadow: 0.1rem 0.1rem 0 rgba(0, 0, 0, 0.32), 0.3rem 0.3rem 0 var(--primary-color), 0.4rem 0.4rem 0 rgba(0, 0, 0, 0.32), 0.6rem 0.6rem 0 var(--primary-color), 0.7rem 0.7rem 0 rgba(0, 0, 0, 0.32), 0.9rem 0.9rem 0 var(--primary-color), 1rem 1rem 0 rgba(0, 0, 0, 0.32), 1.2rem 1.2rem 0 var(--primary-color), 1.3rem 1.2rem 0 rgba(0, 0, 0, 0.32),
         0 0 0.2rem rgba(0, 0, 0, 0.6), inset 0 0 5rem rgba(0, 0, 0, 0.5);
 }
 
 #messages {
     overflow-y: auto;
-    max-height: 80vh;
+    max-height: 70vh;  /* Adjust this value so that messages don't overlap with the input area */
     margin-bottom: 1rem;
     padding: 1rem;
     border-radius: 4px;
     background-color: transparent;
 }
+
 
 #messages div {
     margin-bottom: 0.5rem;
@@ -82,6 +90,8 @@ body {
     color: var(--secondary-color);
 }
 
+
+
 input {
     width: 75%;
     padding: 0.5rem;
@@ -99,10 +109,47 @@ input:focus {
 }
 
 input::placeholder {
-    color: #008000; /* Adjust the color as per your theme */
+    color: var(--terciary-color); /* Adjust the color as per your theme */
     opacity: 1; /* Optional: ensures full color opacity */
     font-family: "Special Elite", monospace; /* Optional: adjust the font-family if necessary */
 }
+
+/* This replaces the previous input styles */
+textarea {
+    width: 75%;
+    padding: 0.5rem;
+    margin-right: 0.5rem;
+    border: 2px solid var(--secondary-color);
+    border-radius: 4px;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    font-family: "Special Elite", monospace;
+    resize: vertical;  /* Allows vertical resizing, disallows horizontal */
+    overflow-y: auto;  /* Allows scrolling if the content exceeds the textarea height */
+}
+
+textarea:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--secondary-color);
+}
+
+textarea::placeholder {
+    color: #008000;
+    opacity: 1;
+    font-family: "Special Elite", monospace;
+}
+
+#input-area {
+    display: flex;
+    align-items: flex-end;  /* Ensures the button aligns with the bottom of the textarea */
+    justify-content: space-between;
+    padding: 1rem;
+    border-top: 2px solid var(--secondary-color);
+    position: absolute;  /* Added to fix the input area to the bottom */
+    width: 100%;
+    bottom: 0;
+}
+
 
 button {
     padding: 0.5rem 1rem;
@@ -184,3 +231,33 @@ button:hover {
     scrollbar-width: thin; /* Width of the scrollbar */
     scrollbar-color: var(--primary-color) var(--secondary-color); /* Color of the draggable scroll thumb and track below the scroll thumb */
 }
+
+/* animation */
+
+.loadingDots {
+    font-size: 30px;
+    color: var(--secondary-color);  /* or any color you prefer */
+    position: absolute;
+    top: 10%;  /* positioning from the bottom, adjust as needed */
+    left: 50%;
+    transform: translateX(-50%);
+    animation: blink 1.4s infinite both;
+}
+
+.loadingDots span {
+    margin: 0 2px;  /* gives space between the dots */
+}
+
+
+@keyframes blink {
+    0% {
+        opacity: .2;
+    }
+    20% {
+        opacity: 1;
+    }
+    100% {
+        opacity: .2;
+    }
+}
+

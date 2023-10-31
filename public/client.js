@@ -12,6 +12,7 @@ async function fetchConfig() {
 }
 
 fetchConfig();
+showLoadingDots();
 
 function sendMessage() {
     const message = document.getElementById("input").value;
@@ -53,6 +54,7 @@ socket.on("bot message", (msg) => {
 });
 
 socket.on("bot introductory message", (msg) => {
+    hideLoadingDots();
     const messagesDiv = document.getElementById("messages");
     messagesDiv.innerHTML += `<div class="bot">Bot: ${formatMessage(msg)}</div>`;
     messagesDiv.scrollTop = messagesDiv.scrollHeight; // Auto-scroll to bottom
@@ -65,4 +67,12 @@ socket.on("update model name", (modelName) => {
 
 export function handleSendButtonClick() {
     sendMessage();
+}
+
+function showLoadingDots() {
+    document.querySelector(".loadingDots").style.display = "inline-block";
+}
+
+function hideLoadingDots() {
+    document.querySelector(".loadingDots").style.display = "none";
 }

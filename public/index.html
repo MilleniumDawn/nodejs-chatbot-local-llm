@@ -12,8 +12,11 @@
     <body>
         <div id="chat">
             <div id="messages"></div>
+            <div class="loadingDots" style="display:none;">
+                <span>.</span><span>.</span><span>.</span>
+            </div>            
             <div id="input-area">
-                <input id="input" autocomplete="off" placeholder="Type your message here..." />
+                <textarea id="input" autocomplete="off" placeholder="Type your message here..." rows="3"></textarea>
                 <button onclick="import('./client.js').then(module => module.handleSendButtonClick())">Send</button>
             </div>
         </div>

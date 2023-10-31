@@ -32,10 +32,10 @@ async function sendIntroductoryMessage(socket) {
             `${config.apiBaseUrl}${config.API_ENDPOINT}`, 
             {
                 messages: [
-                    { role: "assistant", content: "A chat between a curious user and an artificial intelligence assistant. The assistant gives helpful, detailed, and polite answers to the user's questions." },
+                    { role: "system", content: "A chat between a curious user and an artificial intelligence assistant. The assistant gives helpful, detailed, and polite answers to the user's questions." },
                     {
                         role: "user",
-                        content: `USER: Introduce yourself in 10 word. ASSISTANT:`
+                        content: `USER : Tell me what you are in one phrase. ASSISTANT: `
                     }
                 ],
                 stop: config.STOP_SEQUENCE,
@@ -68,7 +68,7 @@ io.on('connection', (socket) => {
     // Initialize New User Message History
     userHistoryManager.setUserMessageHistory(socket.id, [
         {
-            role: "assistant",
+            role: "system",
             content: "A chat between a curious user and an artificial intelligence assistant. The assistant gives helpful, detailed, and polite answers to the user's questions."
         }
     ]);
