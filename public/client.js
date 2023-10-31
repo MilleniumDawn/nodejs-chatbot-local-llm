@@ -52,6 +52,16 @@ socket.on("bot message", (msg) => {
     messagesDiv.scrollTop = messagesDiv.scrollHeight; // Auto-scroll to bottom
 });
 
+socket.on("bot introductory message", (msg) => {
+    const messagesDiv = document.getElementById("messages");
+    messagesDiv.innerHTML += `<div class="bot">Bot: ${formatMessage(msg)}</div>`;
+    messagesDiv.scrollTop = messagesDiv.scrollHeight; // Auto-scroll to bottom
+});
+
+socket.on("update model name", (modelName) => {
+    document.querySelector(".modelName").textContent = modelName;
+});
+
 
 export function handleSendButtonClick() {
     sendMessage();

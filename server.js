@@ -1,4 +1,5 @@
 import express from 'express';
+import axios from 'axios';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import { fileURLToPath } from 'url';
@@ -25,14 +26,49 @@ app.get('/config', (req, res) => {
     res.json({ modelName: config.modelName });
 });
 
+async function sendIntroductoryMessage(socket) {
+    try {
+        const response = await axios.post(
+            `${config.apiBaseUrl}${config.API_ENDPOINT}`, 
+            {
+                messages: [
+                    { role: "assistant", content: "A chat between a curious user and an artificial intelligence assistant. The assistant gives helpful, detailed, and polite answers to the user's questions." },
+                    {
+                        role: "user",
+                        content: `USER: Introduce yourself in 10 word. ASSISTANT:`
+                    }
+                ],
+                stop: config.STOP_SEQUENCE,
+                temperature: config.TEMPERATURE,
+                max_tokens: config.MAX_TOKENS,
+                stream: false,
+                repetition_penalty: config.REPETITION_PENALTY,
+                top_p: config.TOP_P,
+                top_k: config.TOP_K,
+                frequency_penalty: config.FREQUENCY_PENALTY,
+                presence_penalty: config.PRESENCE_PENALTY,
+            }
+        );
+
+        const introductionMessage = response.data.choices[0].message.content;
+        const modelName = response.data.model.split("/").pop(); // Extract the model name from the response
+
+        socket.emit("bot introductory message", introductionMessage);
+        socket.emit("update model name", modelName);
+    } catch (error) {
+        console.error("Error while fetching introductory message:", error);
+    }
+}
+
 
 io.on('connection', (socket) => {
     console.log(`User connected with socket ID: ${socket.id}`);
+    sendIntroductoryMessage(socket);
 
     // Initialize New User Message History
     userHistoryManager.setUserMessageHistory(socket.id, [
         {
-            role: "system",
+            role: "assistant",
             content: "A chat between a curious user and an artificial intelligence assistant. The assistant gives helpful, detailed, and polite answers to the user's questions."
         }
     ]);
