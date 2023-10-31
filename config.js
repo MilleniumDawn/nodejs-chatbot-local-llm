@@ -1,11 +1,11 @@
 export const config = {
     modelName: "Mistral-7b-instruct-v0.1.Q6_K.gguf",
-    apiBaseUrl: process.env.API_BASE_URL || "http://localhost:1234/v1",
+    apiBaseUrl: process.env.API_BASE_URL || "http://localhost:1235/v1",
     port: process.env.PORT || 3002,
     MAX_TOKENS: process.env.MAX_TOKENS || 4096,
     API_ENDPOINT: "/chat/completions",
     STOP_SEQUENCE: ["<.>"],
-    TEMPERATURE: 0.4,
+    TEMPERATURE: 0.7,
     STREAM: true,
     REPETITION_PENALTY: 1.1,
     TOP_P: 0.9,
