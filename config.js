@@ -1,5 +1,5 @@
 export const config = {
-    modelName: "Mistral-7b-instruct-v0.1.Q6_K.gguf",
+    modelName: "dolphin-2.2.1-mistral-7b.Q8_0.gguf",
     apiBaseUrl: process.env.API_BASE_URL || "http://localhost:1235/v1",
     port: process.env.PORT || 3002,
     MAX_TOKENS: process.env.MAX_TOKENS || 4096,
