@@ -43,21 +43,23 @@ body {
     max-width: 800px;
     position: relative; 
     height: 80vh; 
-    justify-content: space-between; 
     padding-top: 1rem;
-    padding-bottom: 1rem;
-    margin: 2rem; 
+    padding-bottom: 1rem;  /* Adjust as per your design preference */
+    margin: 2rem;
+    overflow: hidden; 
     box-shadow: 0.1rem 0.1rem 0 rgba(0, 0, 0, 0.32), 0.3rem 0.3rem 0 var(--primary-color), 0.4rem 0.4rem 0 rgba(0, 0, 0, 0.32), 0.6rem 0.6rem 0 var(--primary-color), 0.7rem 0.7rem 0 rgba(0, 0, 0, 0.32), 0.9rem 0.9rem 0 var(--primary-color), 1rem 1rem 0 rgba(0, 0, 0, 0.32), 1.2rem 1.2rem 0 var(--primary-color), 1.3rem 1.2rem 0 rgba(0, 0, 0, 0.32),
         0 0 0.2rem rgba(0, 0, 0, 0.6), inset 0 0 5rem rgba(0, 0, 0, 0.5);
 }
 
 #messages {
     overflow-y: auto;
-    max-height: 70vh;  /* Adjust this value so that messages don't overlap with the input area */
+    flex: 1; /* This will ensure it takes up all available space */
     margin-bottom: 1rem;
     padding: 1rem;
     border-radius: 4px;
     background-color: transparent;
+    width: 100%;
+    max-height: calc(80vh - 100px - 2rem);
 }
 
 
@@ -141,11 +143,11 @@ textarea::placeholder {
 
 #input-area {
     display: flex;
-    align-items: flex-end;  /* Ensures the button aligns with the bottom of the textarea */
+    align-items: center;
     justify-content: space-between;
     padding: 1rem;
     border-top: 2px solid var(--secondary-color);
-    position: absolute;  /* Added to fix the input area to the bottom */
+    position: absolute;
     width: 100%;
     bottom: 0;
 }
