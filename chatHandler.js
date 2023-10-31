@@ -9,6 +9,7 @@ export async function handleUserMessage(socket, messageHistory, msg) {
     let accumulatedResponse = "";
 
     // Ensure the message history is within the token limit
+    userHistoryManager.setUserMessageHistory(socket.id, messageHistory);
     userHistoryManager.ensureTokenLimit(socket.id);
 
     try {
