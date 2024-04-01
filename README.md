@@ -35,3 +35,9 @@ npm install
 ```bash
 npm run start
 ```
+
+### For Ollama on MacOs:
+```bash
+launchctl setenv OLLAMA_HOST "0.0.0.0"
+launchctl setenv OLLAMA_ORIGINS "https://yourdomain.com"
+```
