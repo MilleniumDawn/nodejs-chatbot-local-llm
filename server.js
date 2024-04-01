@@ -1,6 +1,6 @@
 //server.js
 import express from 'express';
-import ollama from 'ollama';
+import { Ollama } from 'ollama';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import { fileURLToPath } from 'url';
@@ -14,6 +14,7 @@ const app = express();
 const server = createServer(app);
 const io = new Server(server);
 const userHistoryManager = new UserHistoryManager();
+const ollama = new Ollama({ host: config.HOST });
 
 app.use(express.static('public'));
 app.use(errorHandlingMiddleware);

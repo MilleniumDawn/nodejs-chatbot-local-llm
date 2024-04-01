@@ -1,8 +1,9 @@
 //chatHandler.js
-import ollama from 'ollama';
+import { Ollama } from 'ollama';
 import { config } from "./config.js";
 import { UserHistoryManager } from "./userHistoryManager.js";
 
+const ollama = new Ollama({ host: config.HOST });
 const userHistoryManager = new UserHistoryManager();
 
 export async function handleUserMessage(socket, messageHistory, msg) {
