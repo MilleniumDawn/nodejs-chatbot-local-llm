@@ -1,4 +1,4 @@
-// Import config
+// userHistoryManager.js
 import { config } from './config.js';
 
 export class UserHistoryManager {

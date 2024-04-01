@@ -1,3 +1,4 @@
+//config.js
 export const config = {
     modelName: "dolphin-2.2.1-mistral-7b.Q8_0.gguf",
     apiBaseUrl: process.env.API_BASE_URL || "http://localhost:1235/v1",
