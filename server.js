@@ -1,6 +1,6 @@
 //server.js
 import express from 'express';
-import axios from 'axios';
+import ollama from 'ollama';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import { fileURLToPath } from 'url';
@@ -29,33 +29,20 @@ app.get('/config', (req, res) => {
 
 async function sendIntroductoryMessage(socket) {
     try {
-        const response = await axios.post(
-            `${config.apiBaseUrl}${config.API_ENDPOINT}`, 
-            {
-                messages: [
-                    { role: "system", content: "A chat between a curious user and an artificial intelligence assistant. The assistant gives helpful, detailed, and polite answers to the user's questions." },
-                    {
-                        role: "user",
-                        content: `USER : Tell me what you are in one phrase. ASSISTANT: `
-                    }
-                ],
-                stop: config.STOP_SEQUENCE,
-                temperature: config.TEMPERATURE,
-                max_tokens: config.MAX_TOKENS,
-                stream: false,
-                repetition_penalty: config.REPETITION_PENALTY,
-                top_p: config.TOP_P,
-                top_k: config.TOP_K,
-                frequency_penalty: config.FREQUENCY_PENALTY,
-                presence_penalty: config.PRESENCE_PENALTY,
-            }
-        );
+        const response = await ollama.chat({
+            model: config.modelName,
+            messages: [
+                { role: "system", content: "A chat between a curious user and an artificial intelligence assistant. The assistant gives helpful, detailed, and polite answers to the user's questions." },
+                {
+                    role: "user",
+                    content: `USER : Tell me what you are in one phrase. ASSISTANT: `
+                }
+            ],
+            stream: false,
+        });
 
-        const introductionMessage = response.data.choices[0].message.content;
-        const modelName = response.data.model.split("/").pop(); // Extract the model name from the response
-
+        const introductionMessage = response.message.content;
         socket.emit("bot introductory message", introductionMessage);
-        socket.emit("update model name", modelName);
     } catch (error) {
         console.error("Error while fetching introductory message:", error);
     }

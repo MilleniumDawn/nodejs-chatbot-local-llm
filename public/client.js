@@ -8,7 +8,7 @@ let botMessageDiv; // Declare a variable to hold the current bot message div
 async function fetchConfig() {
     const response = await fetch("/config");
     const config = await response.json();
-    document.querySelector(".modelName").textContent = `${config.modelName}`;
+    document.querySelector(".modelName").textContent = config.modelName;
 }
 
 fetchConfig();
